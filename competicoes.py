@@ -20,25 +20,6 @@ premio_copa_do_brasil =[ 2000000,   # 5ª fase
     78000000   # campeão
 ]
 def main(lista_resultados,lista_colocacoes,dados_competicao,premio_liberta_total,premio_copa_total ):
-    items = ["Resultados", "Competições", "Premiações" ]
-    while True:
-        for i in range(len(items)):
-            msg = (f"Digite {i+1} para o obter {items[i]}")
-        
-        if valor == 1:
-            return print(lista_resultados)
-        elif valor == 2:
-            return print(competicao)
-        elif valor == 3:
-            opcao_de_campeonato = int(input("Digite 1 - Brasileirão, 2 - Libertadores, 3 - Copa do Brasil: "))
-            if opcao_de_campeonato == 1:
-                return print(premio_brasileiro[lista_colocacoes[0]])
-            elif opcao_de_campeonato == 2:
-                return  print(premio_liberta_total)
-            elif opcao_de_campeonato == 3:
-                return print(premio_copa_total)
-        else:
-            break
     lista_colocacoes = colocacao(list_comp)
     lista_resultados = resultados(list_comp)
     dados_competicao = competicao(lista_colocacoes,list_comp,lista_resultados)
@@ -48,8 +29,25 @@ def main(lista_resultados,lista_colocacoes,dados_competicao,premio_liberta_total
     premio_copa_total = prize_copa_do_brasil(
     dados_competicao,
     lista_colocacoes)
+    while True:
+        valor = validar_resp(4, f"Digite 1 - Resultados\nDigite 2 - Competição\nDigete 3 - Premiações\n Digite 4 - Sair ")
+        if valor == 1:
+            return print(lista_resultados)
+        elif valor == 2:
+            return print(competicao)
+        elif valor == 3:
+            msg = (("Digite 1 - Brasileirão\n" 
+            "Digite 2 - Libertadores,\nDigite 3 - Copa do Brasil: "))
+            opcao_de_campeonato = validar_resp(3, msg)
+            if opcao_de_campeonato == 1:
+                return print(premio_brasileiro[lista_colocacoes[0]])
+            elif opcao_de_campeonato == 2:
+                return  print(premio_liberta_total)
+            elif opcao_de_campeonato == 3:
+                return print(premio_copa_total)
+        else:
+            break
 
-        
 def validar_resp(resp, msg):
     while True:
         try:
@@ -84,10 +82,10 @@ def colocacao(colocacoes:list):
         if comp == "Brasileirão":
             resp = 20 
         elif comp == "Libertadores":
-            msg = (f"Digite somente com números a colocação do time na competição {comp} (Digite 1- para fase de grupos, 2- para oitavas, 3-para quartas 4-semis, 5- vice, 6- campeão): ")
+            msg = (f"Digite a fase que o time parou na {comp}:\nDigite 1- Fase de Grupos\nDigite 2- Oitavas\nDigite 3-Quartas\nDigite 4 - Semifinais\nDigite 5- vice\nDigite 6- Campeão \n")
             resp = 6
         elif comp == "Copa do Brasil":
-            msg = (f"Digite somente com números a colocação do time na competição {comp} (Digite 1- para 5a fase, 2- para oitavas, 3-para quartas 4-semis, 5- vice, 6- campeão): ")
+            msg = (f"Digite a fase que o time parou na {comp}:\nDigite 1- 5ª Fase\nDigite 2- Oitavas\nDigite 3-Quartas\nDigite 4 - Semifinais\nDigite 5- vice\nDigite 6- Campeão\n ")
             resp = 6
         colocacoes.append(validar_resp(resp,msg))
     return colocacoes
@@ -96,13 +94,13 @@ def colocacao(colocacoes:list):
 def prize_liberta(resultados:list , colocacoes:list):
     fase_de_grupos = 5150000 + resultados[1] * 1750000
     premios = [fase_de_grupos] + premio_libertadores
-    if colocacoes[6]:
-        return sum(premios[:colocacoes[1]]) - premio_libertadores[3]
+    if colocacoes[1] == 6:
+        return premios[:colocacoes[1]] - premios[4]
     return sum(premios[:colocacoes[1]])
-
 def prize_copa_do_brasil(competicao, colocacoes):
-
-    return sum(premio_copa_do_brasil[:colocacoes[2]])
+    if premio_brasileiro(colocacao[2]) == premio_brasileiro[6]:
+          sum(premio_copa_do_brasil[:colocacoes[2]]) - premio_brasileiro[5] 
+    return sum(premio_copa_do_brasil[:colocacoes[2]]) 
 
     
 main(resultados, competicao, colocacao,prize_liberta,prize_copa_do_brasil)
