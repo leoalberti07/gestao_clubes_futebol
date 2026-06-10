@@ -41,4 +41,4 @@ class JogadorForm(FlaskForm):
         )
 
         db.session.add(jogador)
-        db.session.commit
+        db.session.commit()

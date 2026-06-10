@@ -24,14 +24,25 @@ def financeiro():
     
     form.status.choices = [
         ('ATIVO', 'Ativo'),
-        ('LESIONADO', 'Lesionado')
+        ('LESIONADO', 'Lesionado'),
+        ('EMPRESTADO', 'Emprestado'),
+        ('INATIVO', 'Inativo')
     ]
     context = {}
     if form.validate_on_submit():
         form.save()
+        print("dados salvos com sucesso")
         return redirect (url_for('homepage'))
 
     return render_template('financeiro.html', context=context, form=form)
+
+@app.route('/financeiro_lista')
+def financeiro_lista():
+    lista_jogadores = Jogador.query.order_by(Jogador.nome).all()
+    context = {
+        jogadores: lista_jogadores
+    }
+    return render_template('financeiro_lista.html', context=context)
 
 @app.route('/competicoes')
 def competicoes():
