@@ -1,8 +1,8 @@
 from app import app
-from flask import render_template
+from flask import render_template, url_for, redirect
 
 @app.route('/')
-def index():
+def homepage():
     return render_template('index.html')
 
 @app.route('/jogadores')
@@ -16,3 +16,7 @@ def financeiro():
 @app.route('/competicoes')
 def competicoes():
     return render_template('competicoes.html')
+
+@app.route('/contratacoes')
+def contratacoes():
+    return render_template('contratacoes.html')
