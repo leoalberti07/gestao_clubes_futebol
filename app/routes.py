@@ -1,6 +1,9 @@
 from app import app
 from flask import render_template, url_for, redirect, request
 
+from app.models import Jogador
+from app.forms import JogadorForm
+
 @app.route('/')
 def homepage():
     return render_template('index.html')
@@ -9,14 +12,26 @@ def homepage():
 def jogadores():
     return render_template('jogadores.html')
 
-@app.route('/financeiro')
+@app.route('/financeiro', methods=['GET', 'POST'])
 def financeiro():
+    form = JogadorForm()
+    form.posicao.choices = [
+        ('GOL', 'Goleiro'),
+        ('ZAG', 'Zagueiro'),
+        ('MEI', 'Meio-Campo'),
+        ('ATA', 'Atacante')
+    ]
+    
+    form.status.choices = [
+        ('ATIVO', 'Ativo'),
+        ('LESIONADO', 'Lesionado')
+    ]
     context = {}
-    if request.method == 'GET':
-        pesquisa = request.args.get('pesquisa')
-        context = {'pesquisa': pesquisa}
+    if form.validate_on_submit():
+        form.save()
+        return redirect (url_for('homepage'))
 
-    return render_template('financeiro.html', context=context)
+    return render_template('financeiro.html', context=context, form=form)
 
 @app.route('/competicoes')
 def competicoes():

@@ -25,14 +25,37 @@
     <main>
         <h1>Setor Financeiro do Clube</h1>
         <p>Controle o fluxo de caixa, mensalidades, patrocínios e despesas gerais.</p>
+        <hr>
         <div class="container">
-            <form action="" method="get">
-                digite alguma coisa
-                <input type="text" name="pesquisa" id="" class="form-control">
-                <button type="submit">search</button>
+            <form action="" method="post">
+                {{ form.csrf_token }}
+                <br>
+                {{ form.nome.label() }}
+                {{ form.nome() }}
+                <br>
+                {{ form.idade.label() }}
+                {{ form.idade() }}
+                <br>
+                {{ form.numero_camisa.label() }}
+                {{ form.numero_camisa() }}
+                <br>
+                {{ form.posicao.label() }}
+                {{ form.posicao() }}
+                <br>
+                {{ form.status.label() }}
+                {{ form.status() }}
+                <br>
+                {{ form.valor_mercado.label() }}
+                {{ form.valor_mercado() }}
+                <br>
+                {{ form.salario.label() }}
+                {{ form.salario() }}
+                <br>
+                {{ form.btn_submit() }}
+
             </form>
         </div>
-        <p>exibindo dados de: {{context['pesquisa']}}</p>
+
     </main>
 
 </body>
