@@ -47,9 +47,6 @@
     font-size: large;
 }
 
-.sidebar li {
-    margin-bottom: 20%;
-}
 
 /* Lógica de Abertura: Quando o checkbox está marcado, move a sidebar */
 #menu-toggle:checked~.sidebar {

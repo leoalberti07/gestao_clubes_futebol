@@ -1,22 +1,31 @@
 from app import app
-from flask import render_template, url_for, redirect
+from flask import render_template, url_for, redirect 
+from app.form import CompeticoesForm
+from app.models import Competicoes
 
-@app.route('/')
+
+@app.route('/', methods=['GET', 'POST'])
 def homepage():
     return render_template('index.html')
 
-@app.route('/jogadores')
+@app.route('/jogadores', methods=['GET', 'POST'])
 def jogadores():
     return render_template('jogadores.html')
 
-@app.route('/financeiro')
+@app.route('/financeiro',methods=['GET', 'POST'])
 def financeiro():
     return render_template('financeiro.html')
 
-@app.route('/competicoes')
+@app.route('/competicoes', methods=['GET', 'POST'])
 def competicoes():
-    return render_template('competicoes.html')
+    form = CompeticoesForm()
+    context = {}
+    if form.validate_on_submit():
+        print("ta no caminho ")
+        form.save()
+        print("Dados salvos só q n kkkkkk")
+    return render_template('competicoes.html', context=context , form=form) 
 
-@app.route('/contratacoes')
+@app.route('/contratacoes',methods=['GET', 'POST'])
 def contratacoes():
     return render_template('contratacoes.html')

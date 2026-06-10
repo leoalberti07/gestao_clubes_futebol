@@ -4,12 +4,14 @@ from flask_migrate import Migrate
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMEY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'eofutizinhosexta' 
 
 db = SQLAlchemy(app)
 migrate = Migrate(app,db)
 
 from app.routes import homepage, jogadores,financeiro,contratacoes,competicoes
-from app.models import competicoes
+from app.models import Competicoes
+from app.form import CompeticoesForm
 
