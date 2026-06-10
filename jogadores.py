@@ -1,93 +1,59 @@
+from flask import Flask, render_template, request, redirect, url_for
+
+app = Flask(__name__)
+
 jogadores = []
-posicoes = ["GOL", "ZAG", "LAT", "MC", "MEI", "PE", "PD","ATA"]
-situacoes = ["ATIVO","EMPRESTADO","LESIONADO","INATIVO",]
+posicoes = ["GOL", "ZAG", "LAT", "MC", "MEI", "PE", "PD", "ATA"]
+situacoes = ["ATIVO", "EMPRESTADO", "LESIONADO", "INATIVO"]
 
+@app.route("/jogadores")
+def pagina_jogadores():
+    return render_template("jogadores.html")
 
-def cadastrar_jogador():
-   nome = input("digite o nome do atetla: ")
-   while True:
-       posicao = input(f"Posição {posicoes}: ").upper()
-    
-       if posicao in posicoes:
-          break
-       print("posição invalida.") 
+@app.route("/cadastrar_jogador_web", methods=["POST"])
+def cadastrar_jogador_web():
+    nome = request.form.get("nome_atleta")
+    posicao = request.form.get("posicao_atleta").upper()
+    situacao = request.form.get("situacao_atleta").upper()
+    historico = request.form.get("historico_atleta")
 
-   while True:
-        situacao = input(f"Situação {situacoes}: ").upper()
-    
-        if situacao in situacoes:
-          break
-        print("situação invalida.")
-   historico = input("historico do jogador: ") 
-   
-   jogador = {
+    if posicao not in posicoes:
+        return f"Erro: Posicao invalida! Escolha entre: {posicoes}", 400
+
+    if situacao not in situacoes:
+        return f"Erro: Situacao invalida! Escolha entre: {situacoes}", 400
+
+    jogador = {
         "nome": nome,
         "posicao": posicao,
         "situacao": situacao,
         "historico": historico
     }
-   jogadores.append(jogador)
-   print("Jogador cadastrado com sucesso!")
-def listar_jogadores():
-    if not jogadores:
-        print("Nenhum jogador cadastrado.")
-        return
-    print("\n=== JOGADORES ===")
-    for i, jogador in enumerate(jogadores):
-        print(f"\nID: {i}")
-        print(f"Nome: {jogador['nome']}")
-        print(f"Posição: {jogador['posicao']}")
-        print(f"Situação: {jogador['situacao']}")
-        print(f"Histórico: {jogador['historico']}")
-
-
-def atualizar_jogador():
-    if not jogadores:
-        print("Nenhum jogador cadastrado.")
-        return
-    try:
-        id_jogador = int(input("ID do jogador:"))
-    except ValueError:
-        print("digite um numero valido.")
-        return
     
-    if id_jogador < 0 or id_jogador >= len(jogadores):
-        print("ID inválido.")
-        return
-    
-    nova_situacao = input("Nova situação: ").upper()
+    jogadores.append(jogador)
+    return redirect(url_for('pagina_jogadores'))
+
+@app.route("/atualizar_jogador_web", methods=["POST"])
+def atualizar_jogador_web():
+    nome_pesquisa = request.form.get("nome_atualizar")
+    nova_situacao = request.form.get("nova_situacao").upper()
+    novo_historico = request.form.get("novo_historico")
 
     if nova_situacao not in situacoes:
-        print("Situação inválida.")
-        return
-    
-    jogadores[id_jogador]["situacao"] = nova_situacao
+        return f"Erro: Situacao invalida! Escolha entre: {situacoes}", 400
 
-    novo_historico = input("atualização do histórico: ")
-    jogadores[id_jogador]["historico"] += f" | {novo_historico}"
-    print("Jogador atualizado com sucesso!")
-
-
-def gerenciar_jogadores():
-    while True:
-        print("\n=== GERENCIAR JOGADORES ===")
-        print("1. Cadastrar jogador")
-        print("2. Listar jogadores")
-        print("3. Atualizar jogador")
-        print("4. Voltar ao menu principal")
-        escolha = input("Escolha uma opção: ")
-
-        if escolha == "1":
-            cadastrar_jogador()
-        elif escolha == "2":
-            listar_jogadores()
-        elif escolha == "3":
-            atualizar_jogador()
-        elif escolha == "4":
+    achou = False
+    for jogador in jogadores:
+        if jogador["nome"].lower() == nome_pesquisa.lower():
+            jogador["situacao"] = nova_situacao
+            jogador["historico"] += f" | {novo_historico}"
+            achou = True
             break
-        else:
-            print("Opção inválida!")
 
-if __name__ == "__main__":   
-    gerenciar_jogadores()
+    if not achou:
+        return f"Erro: Jogador '{nome_pesquisa}' nao encontrado!", 404
 
+    return redirect(url_for('pagina_jogadores'))
+
+if __name__ == "__main__": 
+    app.run(debug=True)

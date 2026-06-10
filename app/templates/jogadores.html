@@ -19,13 +19,48 @@
         <nav class="sidebar">
             <ul>
                 <li><a href="{{url_for('homepage')}}"> Home</a></li>
+                <li><a href="{{url_for('jogadores')}}"> jogadores
                 <li><a href="{{url_for('financeiro')}}"> Financeiro</a> </li>
                 <li><a href="{{url_for('competicoes')}}"> Competições</a> </li>
                 <li><a href="{{url_for('contratacoes')}}"> Contratações</a> </li>
             </ul>
         </nav>
     </div>
-    form
+    <main>
+    <h1>Painel de Controle dos Atletas</h1>
+    
+    <hr>
+
+    <h2>Cadastrar Jogador</h2>
+    <button>Cadastrar Atleta</button>
+
+    <hr>
+
+    <h2>Atualizar Jogador</h2>
+    <button>Atualizar Situação</button>
+
+    <hr>
+
+ <h2>Jogadores Cadastrados</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Posição</th>
+            <th>Situação</th>
+            <th>Histórico</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td colspan="4">Nenhum jogador cadastrado.</td>
+        </tr>
+    </tbody>
+</table>
+</main>
+    
 
 
     <footer>
