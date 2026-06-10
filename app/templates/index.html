@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Home</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+
+<body>
+
+    <div id="aba_lateral">
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="btn-menu">☰ MENU</label>
+        <nav class="sidebar">
+            <ul>
+                <li><a href="{{url_for('homepage')}}"> Home</a></li>
+                <li><a href="{{url_for('jogadores')}}"> Jogadores</a> </li>
+                <li><a href="{{url_for('financeiro')}}"> Financeiro</a> </li>
+                <li><a href="{{url_for('competicoes')}}"> Competições</a> </li>
+                <li><a href="{{url_for('contratacoes')}}"> Contratações</a> </li>
+            </ul>
+        </nav>
+    </div>
+
+    <footer>
+
+    </footer>
+</body>
+
+</html>

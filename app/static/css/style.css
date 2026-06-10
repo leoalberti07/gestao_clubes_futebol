@@ -1,0 +1,57 @@
+/* Esconde o checkbox real */
+#menu-toggle {
+    display: none;
+}
+
+/* Estilo do botão de abrir */
+.btn-menu {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    padding: 10px 15px;
+    background: #333;
+    color: white;
+    cursor: pointer;
+    z-index: 1001;
+    /* Fica acima da sidebar */
+    border-radius: 5px;
+}
+
+/* Estilo da Barra Lateral */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background: #f4f4f4;
+    border-right: 1px solid #ddd;
+    /* Começa escondida à esquerda */
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    padding-top: 60px;
+    /* Espaço para não cobrir o botão */
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar a {
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #333;
+    font-size: large;
+}
+
+.sidebar li {
+    margin-bottom: 20%;
+}
+
+/* Lógica de Abertura: Quando o checkbox está marcado, move a sidebar */
+#menu-toggle:checked~.sidebar {
+    transform: translateX(0);
+}

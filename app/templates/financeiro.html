@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <title>Financeiro - Gerir Fut</title>
+</head>
+
+<body>
+
+    <div id="aba_lateral">
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle">☰ MENU</label>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('homepage') }}">Home</a></li>
+                <li><a href="{{url_for('jogadores')}}"> Jogadores</a> </li>
+                <li><a href="{{ url_for('financeiro') }}">Financeiro</a></li>
+                <li><a href="{{ url_for('competicoes') }}">Competições</a></li>
+                <li><a href="{{ url_for('contratacoes') }}">Contratações</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <main>
+        <h1>Setor Financeiro do Clube</h1>
+        <p>Controle o fluxo de caixa, mensalidades, patrocínios e despesas gerais.</p>
+        <div class="container">
+            <form action="" method="get">
+                digite alguma coisa
+                <input type="text" name="pesquisa" id="" class="form-control">
+                <button type="submit">search</button>
+            </form>
+        </div>
+        <p>exibindo dados de: {{context['pesquisa']}}</p>
+    </main>
+
+</body>
+
+</html>
