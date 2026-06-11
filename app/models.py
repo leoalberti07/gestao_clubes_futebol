@@ -1,9 +1,6 @@
 from app import db
 from datetime import datetime
 
-class competicoes(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-
 class Jogador(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False)
@@ -20,3 +17,9 @@ class Transacao(db.Model):
     valor_transacao = db.Column(db.Float, nullable=False)
     descricao = db.Column(db.String, nullable=False)
     data_transacao = db.Column(db.DateTime, nullable=False, default=datetime.now)
+
+class Competicoes(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    competicao = db.Column(db.String, nullable= True)
+    colocacao = db.Column(db.Integer, nullable = True)
+    vitorias = db.Column(db.Integer )

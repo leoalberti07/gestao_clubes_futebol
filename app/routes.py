@@ -4,11 +4,11 @@ from flask import render_template, url_for, redirect, request
 from app.models import *
 from app.form import *
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def homepage():
     return render_template('index.html')
 
-@app.route('/jogadores')
+@app.route('/jogadores', methods=['GET', 'POST'])
 def jogadores():
     return render_template('jogadores.html')
 
@@ -92,10 +92,22 @@ def excluir_transacao(id):
         print(f"Erro ao excluir transação: {e}")
     return redirect(url_for('financeiro_lista'))
 
-@app.route('/competicoes')
+@app.route('/competicoes', methods=['GET', 'POST'])
 def competicoes():
     return render_template('competicoes.html')
 
-@app.route('/contratacoes')
+@app.route('/competicoes/financeiro', methods =['Get','POST'])
+def competicoes_financeiro():
+
+    dados = Competicoes.query.order_by('colocacao').all()
+    
+    print(dados)
+    
+    context = {}
+    
+    return render_template('competicoes_fin.html', context=context)
+
+@app.route('/contratacoes',methods=['GET', 'POST'])
+
 def contratacoes():
     return render_template('contratacoes.html')
