@@ -1,54 +1,144 @@
-/* Esconde o checkbox real */
+/*RESET E CONFIGURAÇÕES GERAIS*/
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Esconde o checkbox do controle */
 #menu-toggle {
-    display: none;
+    display: none !important;
 }
 
-/* Estilo do botão de abrir */
-.btn-menu {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    padding: 10px 15px;
-    background: #333;
-    color: white;
-    cursor: pointer;
-    z-index: 1001;
-    /* Fica acima da sidebar */
-    border-radius: 5px;
-}
-
-/* Estilo da Barra Lateral */
-.sidebar {
-    position: fixed;
+/*NAVBAR*/
+.navbar-topo {
+    position: fixed !important;
     top: 0;
     left: 0;
-    width: 250px;
-    height: 100%;
-    background: #f4f4f4;
-    border-right: 1px solid #ddd;
-    /* Começa escondida à esquerda */
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    z-index: 1000;
-    padding-top: 60px;
-    /* Espaço para não cobrir o botão */
+    width: 100%;
+    height: 65px;
+    background: #0f172a;
+    /* Slate 900 */
+    border-bottom: 1px solid #1e293b;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+
+    z-index: 1060 !important;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+
+.header-esquerdo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+
+.btn-menu-header {
+    font-size: 1.4rem;
+    color: #f8fafc;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 6px;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-menu-header:hover {
+    background: #1e293b;
+    color: #38bdf8;
+}
+
+.logo-texto {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #f8fafc;
+    letter-spacing: 0.5px;
+}
+
+
+.header-direito {
+    display: flex;
+    align-items: center;
+}
+
+
+/*BARRA LATERAL (SIDEBAR)*/
+.sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 260px;
+    height: 100% !important;
+    background: #0f172a;
+    border-right: 1px solid #1e293b;
+    transform: translateX(-100%) !important;
+    /* Começa recolhida */
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    padding-top: 80px;
+    /* Joga os links para baixo da linha do header */
+    display: flex;
+    flex-direction: column;
+
+    z-index: 1050 !important;
 }
 
 .sidebar ul {
-    list-style: none;
-    padding: 0;
+    list-style: none !important;
+    padding: 0 12px !important;
+    margin: 0 !important;
+}
+
+.sidebar li {
+    margin-bottom: 8px !important;
 }
 
 .sidebar a {
     display: block;
-    padding: 15px 20px;
-    text-decoration: none;
-    color: #333;
-    font-size: large;
+    padding: 12px 16px;
+    text-decoration: none !important;
+    color: #94a3b8;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: all 0.2s ease;
 }
 
 
-/* Lógica de Abertura: Quando o checkbox está marcado, move a sidebar */
+.sidebar a:hover {
+    background: #1e293b;
+    color: #38bdf8;
+    padding-left: 22px;
+}
+
+
+/*LÓGICA DE ABERTURA*/
 #menu-toggle:checked~.sidebar {
-    transform: translateX(0);
+    transform: translateX(0) !important;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+
+/*Ajuste de margem*/
+.conteudo-principal-app,
+main,
+.container,
+.row.mt-4 {
+    padding-top: 45px !important;
+}
+
+
+.formulario {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+
 }

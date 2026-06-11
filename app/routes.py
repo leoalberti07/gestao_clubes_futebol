@@ -26,6 +26,17 @@ def competicoes():
         print("Dados salvos só q n kkkkkk")
     return render_template('competicoes.html', context=context , form=form) 
 
+@app.route('/competicoes/financeiro', methods =['Get','POST'])
+def competicoes_financeiro():
+
+    dados = Competicoes.query.order_by('colocacao').all()
+    
+    print(dados)
+    
+    context = {}
+    
+    return render_template('competicoes_fin.html', context=context)
+
 @app.route('/contratacoes',methods=['GET', 'POST'])
 def contratacoes():
     return render_template('contratacoes.html')
