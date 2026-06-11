@@ -94,7 +94,12 @@ def excluir_transacao(id):
 
 @app.route('/competicoes', methods=['GET', 'POST'])
 def competicoes():
-    return render_template('competicoes.html')
+    form = CompeticoesForm() 
+    
+    if form.validate_on_submit():
+        pass
+        
+    return render_template('competicoes.html', form=form)
 
 @app.route('/competicoes/financeiro', methods =['Get','POST'])
 def competicoes_financeiro():

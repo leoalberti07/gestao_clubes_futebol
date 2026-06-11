@@ -12,4 +12,4 @@ db = SQLAlchemy(app)
 migrate = Migrate(app,db)
 
 from app.routes import homepage
-from app.models import competicoes
+from app.models import Competicoes
