@@ -48,7 +48,7 @@ class TransacaoForm(FlaskForm):
         ('RECEITA', 'receita'),
         ('DESPESA', 'despesa')
     ])
-    valor_transacao = FloatField('Valor da transação', validators=[DataRequired(), NumberRange(min=0, max=100000000000)])
+    valor_transacao = FloatField('Valor da transação', validators=[DataRequired(), NumberRange(min=0.01)])
     descricao = SelectField('Descrição da transação', validators=[DataRequired()], choices=[
         ("PATROCINIO MASTER", "Patrocínio master"),
         ("PATROCINIOS SECUNDARIOS", "Patrocínios Secundários"),
