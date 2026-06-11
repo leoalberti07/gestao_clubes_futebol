@@ -17,14 +17,13 @@ body {
     width: 100%;
     height: 65px;
     background: #0f172a;
-    /* Slate 900 */
     border-bottom: 1px solid #1e293b;
     display: flex;
     align-items: center;
     padding: 0 24px;
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
-
-    z-index: 1060 !important;
+ 
+    z-index: 1060 !important; 
 }
 
 .header-container {
@@ -79,15 +78,13 @@ body {
     height: 100% !important;
     background: #0f172a;
     border-right: 1px solid #1e293b;
-    transform: translateX(-100%) !important;
-    /* Começa recolhida */
+    transform: translateX(-100%) !important; /* Começa recolhida */
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    padding-top: 80px;
-    /* Joga os links para baixo da linha do header */
+    padding-top: 80px; /* Joga os links para baixo da linha do header */
     display: flex;
     flex-direction: column;
-
-    z-index: 1050 !important;
+    
+    z-index: 1050 !important; 
 }
 
 .sidebar ul {
@@ -120,25 +117,24 @@ body {
 
 
 /*LÓGICA DE ABERTURA*/
-#menu-toggle:checked~.sidebar {
+#menu-toggle:checked ~ .sidebar {
     transform: translateX(0) !important;
     box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5) !important;
 }
 
 
 /*Ajuste de margem*/
-.conteudo-principal-app,
-main,
-.container,
-.row.mt-4 {
+.conteudo-principal-app, main, .container, .row.mt-4 {
     padding-top: 45px !important;
 }
 
+.table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+}
 
-.formulario {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    flex-direction: column;
-
+.table-dark th {
+    background-color: #212529 !important;
+    color: #ffffff !important;
+    border: none !important;
 }

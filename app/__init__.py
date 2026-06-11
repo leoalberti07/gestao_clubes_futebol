@@ -6,12 +6,10 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'eofutizinhosexta' 
+app.config['SECRET_KEY'] = "asdcvbhijklkjytedxcvu kjk!!!fmkfmsfo--fskmfk2342"
 
 db = SQLAlchemy(app)
 migrate = Migrate(app,db)
 
-from app.routes import homepage, jogadores,financeiro,contratacoes,competicoes
-from app.models import Competicoes
-from app.form import CompeticoesForm
-
+from app.routes import homepage
+from app.models import competicoes
