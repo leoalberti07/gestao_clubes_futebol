@@ -11,5 +11,5 @@ app.config['SECRET_KEY'] = "asdcvbhijklkjytedxcvu kjk!!!fmkfmsfo--fskmfk2342"
 db = SQLAlchemy(app)
 migrate = Migrate(app,db)
 
-from app.routes import homepage, jogadores, financeiro, contratacoes, competicoes
+from app.routes import homepage
 from app.models import competicoes

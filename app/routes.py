@@ -1,8 +1,8 @@
 from app import app
 from flask import render_template, url_for, redirect, request
 
-from app.models import Jogador
-from app.forms import JogadorForm
+from app.models import *
+from app.form import *
 
 @app.route('/')
 def homepage():
@@ -36,12 +36,54 @@ def financeiro():
 
     return render_template('financeiro.html', context=context, form=form)
 
+@app.route('/financeiro_transacoes', methods=['GET', 'POST'])
+def financeiro_transacoes():
+    form = TransacaoForm()
+    form.tipo.choices = [
+        ('RECEITA', 'receita'),
+        ('DESPESA', 'despesa')
+    ]
+    
+    form.descricao.choices = [
+        ("PATROCINIO MASTER", "Patrocínio master"),
+        ("PATROCINIOS SECUNDARIOS", "Patrocínios Secundários"),
+        ("SOCIO-TORCEDOR","Sócio-Torcedor"),
+        ("BILHETERIA", "Bilheteria (Ingressos)"),
+        ("PRODUTOS LICENCIADOS", "Venda de Produtos Licenciados"),
+        ("DIREITOS DE TRANSMISSAO", "Cotas de TV e Direitos de Transmissão"),
+        ("PREMIACAO", "Premiações de Campeonatos"),
+        ("VENDA/TRANSFERENCIA", "Venda / Transferência de Atletas"),
+        ("ALUGUEL ESTADIO", "Aluguel do Estádio / Eventos"),
+        #despesas
+        ("SALARIO JOGADORES", "Salário do Elenco (Jogadores)"),
+        ("SALARIO STAFF", "Salário da Comissão Técnica e Staff"),
+        ("MANUTENCAO ESTADIO", "Manutenção do Estádio e Gramado"),
+        ("VIAGENS HOSPEDAGEM", "Despesas com Viagens e Hospedagem"),
+        ("COMPRA ATLETAS", "Contratação / Compra de Novos Atletas"),
+        ("TAXAS FEDERACAO", "Impostos e Taxas da Federação"),
+        ("LOGISTICA EQUIPAMENTOS", "Logística e Equipamentos (Material Esportivo)"),
+        ("CONTAS GERAIS", "Contas Gerais (Água, Luz, Internet do CT)"),
+        ("INVESTIMENTO BASE", "Investimento nas Categorias de Base")
+    ]
+    context = {}
+    if form.validate_on_submit():
+        form.save()
+        print("dados salvos com sucesso")
+        return redirect (url_for('financeiro'))
+
+    return render_template('financeiro_transacoes.html', context=context, form=form)
+
 @app.route('/financeiro_lista')
 def financeiro_lista():
-    lista_jogadores = Jogador.query.order_by(Jogador.nome).all()
+    termo_pesquisa = request.args.get('pesquisa', '').strip()
+    if termo_pesquisa:
+        resultado = Transacao.query.filter(Transacao.descricao.like(f"%{termo_pesquisa}%")).all()
+    else:
+        resultado = Transacao.query.order_by(Transacao.id.desc()).all()
     context = {
-        jogadores: lista_jogadores
+        'transacoes': resultado
     }
+
     return render_template('financeiro_lista.html', context=context)
 
 @app.route('/competicoes')
