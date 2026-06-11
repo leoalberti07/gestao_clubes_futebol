@@ -14,27 +14,21 @@ def jogadores():
 
 @app.route('/financeiro', methods=['GET', 'POST'])
 def financeiro():
-    form = JogadorForm()
-    form.posicao.choices = [
-        ('GOL', 'Goleiro'),
-        ('ZAG', 'Zagueiro'),
-        ('MEI', 'Meio-Campo'),
-        ('ATA', 'Atacante')
-    ]
-    
-    form.status.choices = [
-        ('ATIVO', 'Ativo'),
-        ('LESIONADO', 'Lesionado'),
-        ('EMPRESTADO', 'Emprestado'),
-        ('INATIVO', 'Inativo')
-    ]
-    context = {}
-    if form.validate_on_submit():
-        form.save()
-        print("dados salvos com sucesso")
-        return redirect (url_for('homepage'))
-
-    return render_template('financeiro.html', context=context, form=form)
+    transacoes = Transacao.query.all()
+    total_receita = 0
+    total_despesa = 0
+    for transacao in transacoes:
+        if transacao.tipo == 'RECEITA':
+            total_receita += transacao.valor_transacao
+        else:
+            total_despesa += transacao.valor_transacao
+    saldo_atual = total_receita - total_despesa
+    context ={
+        'total_receita': total_receita,
+        'total_despesa': total_despesa,
+        'saldo_atual': saldo_atual
+    }
+    return render_template('financeiro.html', context=context)
 
 @app.route('/financeiro_transacoes', methods=['GET', 'POST'])
 def financeiro_transacoes():
@@ -85,6 +79,18 @@ def financeiro_lista():
     }
 
     return render_template('financeiro_lista.html', context=context)
+
+@app.route('/financeiro/excluir/<int:id>', methods=['POST'])
+def excluir_transacao(id):
+    transacao = Transacao.query.get_or_404(id)
+    try:
+        db.session.delete(transacao)
+        db.session.commit()
+        print(f"Transação {id} excluída com sucesso!")
+    except Exception as e:
+        db.session.rollback()
+        print(f"Erro ao excluir transação: {e}")
+    return redirect(url_for('financeiro_lista'))
 
 @app.route('/competicoes')
 def competicoes():

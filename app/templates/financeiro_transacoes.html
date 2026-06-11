@@ -13,19 +13,28 @@
 
 <body class="bg-light">
 
-    <div id="aba_lateral">
-        <input type="checkbox" id="menu-toggle">
-        <label for="menu-toggle">☰ MENU</label>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('homepage') }}">Home</a></li>
-                <li><a href="{{url_for('jogadores')}}"> Jogadores</a> </li>
-                <li><a href="{{ url_for('financeiro') }}">Financeiro</a></li>
-                <li><a href="{{ url_for('competicoes') }}">Competições</a></li>
-                <li><a href="{{ url_for('contratacoes') }}">Contratações</a></li>
-            </ul>
-        </nav>
+    <input type="checkbox" id="menu-toggle">
+
+<header class="navbar-topo">
+    <div class="header-container">
+        <div class="header-esquerdo">
+            <label for="menu-toggle" class="btn-menu-header">☰</label>
+            <span class="logo-texto">Gerir<span class="text-primary">Fut</span></span>
+        </div>
+        
+        <div class="header-direito"></div>
     </div>
+</header>
+
+<nav class="sidebar">
+    <ul>
+        <li><a href="{{ url_for('homepage') }}">Home</a></li>
+        <li><a href="{{ url_for('jogadores') }}">Jogadores</a></li>
+        <li><a href="{{ url_for('financeiro') }}">Financeiro</a></li>
+        <li><a href="{{ url_for('competicoes') }}">Competições</a></li>
+        <li><a href="{{ url_for('contratacoes') }}">Contratações</a></li>
+    </ul>
+</nav>
 
     <main class="py-5">
         <div class="container">
@@ -67,6 +76,7 @@
             </div>
 
             <div class="mt-4">
+                <a href="{{ url_for('financeiro')}}" class="btn btn-outline-secondary btn-sm">Voltar</a>
                 <a href="{{ url_for('financeiro_lista') }}" class="btn btn-outline-secondary btn-sm">Ver Histórico de Transações</a>
             </div>
         </div>

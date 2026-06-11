@@ -19,4 +19,4 @@ class Transacao(db.Model):
     tipo = db.Column(db.String, nullable=False)
     valor_transacao = db.Column(db.Float, nullable=False)
     descricao = db.Column(db.String, nullable=False)
-    data_transacao = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    data_transacao = db.Column(db.DateTime, nullable=False, default=datetime.now)
