@@ -127,9 +127,8 @@ body {
 
 
 /*Ajuste de margem*/
-.conteudo-principal-app,
-main,
-.container,
+
+.formulario,
 .row.mt-4 {
     padding-top: 45px !important;
 }
@@ -140,5 +139,6 @@ main,
     align-items: center;
     flex-wrap: wrap;
     flex-direction: column;
+    z-index: 2100 !important;
 
 }

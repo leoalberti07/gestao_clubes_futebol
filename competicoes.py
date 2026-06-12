@@ -1,4 +1,4 @@
-from app import *
+
 
 
 brasileiro = [
@@ -16,14 +16,14 @@ copa_do_brasil = [
     2000000    # 5ª fase
 ]
 
-premio_libertadores = [
-    
-    6440000,    # oitavas
-    9000000,    # quartas
-    11850000,   # semi
-    36000000,   # vice
-    129000000   # campeão
+premio_libertadores = [ 
+    12900000,
+    36000000,
+    11850000,
+    9000000,
+    6440000,
 ]
+
 def calculo_libertadores(colocacao,vitorias):
     fase_de_grupos = 5150000 + vitorias * 1750000 
     premio_libertadores.append(fase_de_grupos)
@@ -36,5 +36,7 @@ def calculo_libertadores(colocacao,vitorias):
 
 def calculo_brasileirao(colocacao):
 
-    return brasileiro[colocacao]
+    return brasileiro[colocacao - 1]
     
+print(calculo_brasileirao(1))
+print(calculo_libertadores(1 , 6))
