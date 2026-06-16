@@ -12,3 +12,4 @@ migrate = Migrate(app,db)
 
 from app.routes import homepage, jogadores,financeiro,contratacoes,competicoes
 from app.models import competicoes
+from app.models import Jogador
