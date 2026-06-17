@@ -25,10 +25,21 @@ class CompeticoesForm(FlaskForm):
             premiacao = self.premiacao.data,
             num_jogos = self.num_jogos.data,
             vitorias = self.vitorias.data,
-            derrotas = self.derrotas.data
+            derrotas = self.derrotas.data,
         )
+
+        financias_competição = Transacao(
+            tipo = 'RECEITA',
+            valor_transacao = self.premiacao.data,
+            descricao = 'PREMIACAO'
+            )
+
         db.session.add(list_competicoes)
         db.session.commit()
+        
+        db.session.add(financias_competição)
+        db.session.commit()
+
 
 
     def validate_competicao(self, field):
