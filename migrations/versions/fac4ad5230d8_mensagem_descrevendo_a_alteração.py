@@ -1,8 +1,8 @@
-"""Ta funcionando agora eu acho
+"""mensagem descrevendo a alteração
 
-Revision ID: ffa14d854e23
+Revision ID: fac4ad5230d8
 Revises: 
-Create Date: 2026-06-16 21:17:47.278577
+Create Date: 2026-06-16 22:36:58.202024
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ffa14d854e23'
+revision = 'fac4ad5230d8'
 down_revision = None
 branch_labels = None
 depends_on = None

@@ -27,14 +27,14 @@ def competicoes():
 
 @app.route('/competicoes/financeiro', methods =['GET','POST'])
 def competicoes_financeiro():
-    if request.method == 'GET':
-        pesquisa = request.args.get('pesquisa', '')
-
-    dados = Competicoes.query.order_by('colocacao')
-    if pesquisa != '':
-        dados = dados.filter_by(competicoes=pesquisa)
-    context = {'dados': dados.all()}
-    
+    termo_pesquisa = request.args.get('pesquisa', '').strip()
+    if termo_pesquisa:
+        resultado = Competicoes.query.filter(Competicoes.competicao.like(f"%{termo_pesquisa}%")).all()
+    else:
+        resultado = Competicoes.query.order_by(Competicoes.colocacao).all()
+    context = {
+        'dados': resultado
+    }
     return render_template('competicoes_fin.html', context=context)
 
 @app.route('/contratacoes',methods=['GET', 'POST'])
