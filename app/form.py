@@ -2,8 +2,11 @@ from flask_wtf import FlaskForm
 from wtforms import  StringField, FloatField, SubmitField, IntegerField, SelectField
 from wtforms.validators import DataRequired, NumberRange, ValidationError
 
+
+from app.models import *
 from app import db
-from app.models import Competicoes, Jogador,Transacao
+
+
 class CompeticoesForm(FlaskForm):
     competicao = StringField("Competições: ", validators=[DataRequired()])
     colocacao = IntegerField("Colocação: ", validators=[DataRequired(), NumberRange(min=0, max=46)])
@@ -27,14 +30,12 @@ class CompeticoesForm(FlaskForm):
         db.session.add(list_competicoes)
         db.session.commit()
 
+
     def validate_competicao(self, field):
         caracteres = "@*?!'^+%&/()=}][{$#"
         for car in self.competicao.data:
             if car in caracteres:
                 raise ValidationError(f"Erro,  não pode conter {car} ")
-
-
-    
     
     
     def validate_num_jogos(self, field):

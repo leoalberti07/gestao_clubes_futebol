@@ -125,11 +125,14 @@ body {
 
 
 /*Ajuste de margem*/
+
+
 .conteudo-principal-app,
 main,
 .container,
 .row.mt-4,
 .Resultados {
+
     padding-top: 45px !important;
 }
 

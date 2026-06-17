@@ -1,7 +1,7 @@
 from app import app
+
 from flask import render_template, url_for, redirect,request
 
-from app.models import *
 from app.form import *
 
 @app.route('/', methods=['GET', 'POST'])
@@ -95,11 +95,13 @@ def excluir_transacao(id):
 @app.route('/competicoes', methods=['GET', 'POST'])
 def competicoes():
     form = CompeticoesForm() 
+
     context={}
     if form.validate_on_submit():
         form.save()
         return redirect(url_for('competicoes')) 
     return render_template('competicoes.html', context=context , form=form)
+
 
 
 @app.route('/competicoes/financeiro', methods =['GET','POST'])
