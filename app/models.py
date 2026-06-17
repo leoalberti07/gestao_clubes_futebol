@@ -24,6 +24,6 @@ class Competicoes(db.Model):
     colocacao = db.Column(db.Integer, nullable = True)
     premiacao = db.Column(db.Integer, nullable = True)
     num_jogos = db.Column(db.Integer, nullable = True)
-    vitorias = db.Column(db.Integer, nullable = True)
-    derrotas = db.Column(db.Integer, nullable = True)
+    vitorias = db.Column(db.Integer)
+    derrotas = db.Column(db.Integer)
 
