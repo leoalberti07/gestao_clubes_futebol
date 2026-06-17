@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Financeiro - Gerir Fut</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+
+<body class="bg-light">
+
+    <input type="checkbox" id="menu-toggle">
+
+<header class="navbar-topo">
+    <div class="header-container">
+        <div class="header-esquerdo">
+            <label for="menu-toggle" class="btn-menu-header">☰</label>
+            <span class="logo-texto">Gerir<span class="text-primary">Fut</span></span>
+        </div>
+        
+        <div class="header-direito"></div>
+    </div>
+</header>
+
+<nav class="sidebar">
+    <ul>
+        <li><a href="{{ url_for('homepage') }}">Home</a></li>
+        <li><a href="{{ url_for('jogadores') }}">Jogadores</a></li>
+        <li><a href="{{ url_for('financeiro') }}">Financeiro</a></li>
+        <li><a href="{{ url_for('competicoes') }}">Competições</a></li>
+        <li><a href="{{ url_for('contratacoes') }}">Contratações</a></li>
+    </ul>
+</nav>
+
+    <main class="py-5">
+        <div class="container">
+            <div class="mb-4">
+                <h1 class="fw-bold text-dark">Setor Financeiro do Clube</h1>
+                <p class="text-secondary">Controle o fluxo de caixa, mensalidades, patrocínios e despesas gerais.</p>
+            </div>
+            
+            <hr class="text-muted mb-4">
+
+            <div class="bg-white p-4 rounded border shadow-sm">
+                <h5 class="card-title fw-semibold text-primary mb-4">Cadastrar Nova Transação</h5>
+                
+                <form action="" method="post" class="row g-3">
+                    {{ form.csrf_token }}
+
+                    <div class="col-md-4">
+                        {{ form.tipo.label(class="form-label fw-bold") }}
+                        {{ form.tipo(class="form-select") }}
+                    </div>
+
+                    <div class="col-md-4">
+                        {{ form.valor_transacao.label(class="form-label fw-bold") }}
+                        <div class="input-group">
+                            <span class="input-group-text">R$</span>
+                            {{ form.valor_transacao(class="form-control", placeholder="0,00") }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        {{ form.descricao.label(class="form-label fw-bold") }}
+                        {{ form.descricao(class="form-select") }}
+                    </div>
+
+                    <div class="col-12 text-end mt-4">
+                        <button type="submit" class="btn btn-primary px-5 py-2 fw-semibold">Salvar Transação</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="mt-4">
+                <a href="{{ url_for('financeiro')}}" class="btn btn-outline-secondary btn-sm">Voltar</a>
+                <a href="{{ url_for('financeiro_lista') }}" class="btn btn-outline-secondary btn-sm">Ver Histórico de Transações</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
