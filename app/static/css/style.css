@@ -128,17 +128,37 @@ body {
 
 /*Ajuste de margem*/
 
-.formulario,
+.container,
 .row.mt-4 {
-    padding-top: 45px !important;
+    padding-top: 60px !important;
 }
 
 
-.formulario {
+.container {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     flex-direction: column;
     z-index: 2100 !important;
 
+}
+
+/*Ajuste de margem*/
+.conteudo-principal-app,
+main,
+.container,
+.row.mt-4,
+.Resultados {
+    padding-top: 45px !important;
+}
+
+.table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+}
+
+.table-dark th {
+    background-color: #212529 !important;
+    color: #ffffff !important;
+    border: none !important;
 }

@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, url_for, redirect 
+from flask import render_template, url_for, redirect,request
 from app.form import CompeticoesForm
 from app.models import Competicoes
 
@@ -21,19 +21,19 @@ def competicoes():
     form = CompeticoesForm()
     context = {}
     if form.validate_on_submit():
-        print("ta no caminho ")
         form.save()
-        print("Dados salvos só q n kkkkkk")
-    return render_template('competicoes.html', context=context , form=form) 
+        return redirect(url_for('competicoes')) 
+    return render_template('competicoes.html', context=context , form=form)
 
-@app.route('/competicoes/financeiro', methods =['Get','POST'])
+@app.route('/competicoes/financeiro', methods =['GET','POST'])
 def competicoes_financeiro():
+    if request.method == 'GET':
+        pesquisa = request.args.get('pesquisa', '')
 
-    dados = Competicoes.query.order_by('colocacao').all()
-    
-    print(dados)
-    
-    context = {}
+    dados = Competicoes.query.order_by('colocacao')
+    if pesquisa != '':
+        dados = dados.filter_by(competicoes=pesquisa)
+    context = {'dados': dados.all()}
     
     return render_template('competicoes_fin.html', context=context)
 

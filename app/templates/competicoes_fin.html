@@ -9,8 +9,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -38,22 +37,52 @@
         </ul>
     </nav>
 
-    <div class="Resultados">
-        <h1>Calculos:
-        </h1>
-        <thead>
-            <th>
-                <tr>Colocação</tr>
-                <tr>Campeonato</tr>
-                <tr>Número de vitorias: </tr>
-            </th>
-        </thead>
+    <div class="container">
+
+        <div class="row mt-4">
+            <h1>Calculos:
+            </h1>
+
+            <form method="get" class="row" :>
+                <div class="col-9">
+                    <input type="text" name="pesquisa" class="form-control">
+                </div>
+                <div class="col-3">
+                    <button type="submit" class="btn btn-primary"> Pesquisar</button>
+                </div>
+            </form>
+
+
+            <div class="table-responsive rounded border">
+                <table class="table table-hover align-middle m-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Campeonato </th>
+                            <th>Colocação </th>
+                            <th>Premiação </th>
+                            <th>Número de jogos </th>
+                            <th>Número de vitorias </th>
+                            <th>Número de derrotas </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for linha in context['dados'] %}
+                        <tr>
+                            <td>{{linha.competicao}}</td>
+                            <td>{{linha.colocacao}}</td>
+                            <td>{{linha.premiacao}}</td>
+                            <td>{{linha.num_jogos}}</td>
+                            <td>{{linha.vitorias}}</td>
+                            <td>{{linha.derrotas}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

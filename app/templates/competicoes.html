@@ -8,7 +8,7 @@
     <title>Home</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/competicao.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
 </head>
 
 <body>
@@ -34,38 +34,46 @@
             <li><a href="{{ url_for('contratacoes') }}">Contratações</a></li>
         </ul>
     </nav>
-    <div class='formulario'>
+    <div class='container'>
         <form action="" method="post" class="row mt-4">
             {{ form.csrf_token }}
 
-            {{form.time.label()}}
-            {{form.time()}}
-
+            {% for field, errors in form.errors.items() %}
+            {% for error in errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+            {% endfor %}
             <br><br>
             {{form.competicao.label()}}
             {{form.competicao()}}
-            <br><br>
-            {{form.num_jogos.label()}}
-            {{form.num_jogos()}}
-            <br>
-            {{form.vitorias.label()}}
-            {{form.vitorias()}}
-
-            {{form.derrotas.label()}}
-
-            {{form.derrotas()}}
             <br><br>
             {{form.colocacao.label()}}
             {{form.colocacao()}}
 
             <br><br>
+            {{form.premiacao.label()}}
+            {{form.premiacao()}}
+            <br><br>
+
+            {{form.num_jogos.label()}}
+            {{form.num_jogos()}}
+            <br>
+            {{form.vitorias.label()}}
+            {{form.vitorias()}}
+            <br>
+
+            {{form.derrotas.label()}}
+
+            {{form.derrotas()}}
+            <br><br>
+
             {{form.btnSubmit()}}
 
         </form>
     </div>
     <div class="Resultados_comp">
         <h3>Resultados: </h3>
-        <a href="{{url_for('competicoes_financeiro')}}"> Calculos</a>
+        <a href="{{url_for('competicoes_financeiro')}}"> kkkkkk</a>
     </div>
 
 
