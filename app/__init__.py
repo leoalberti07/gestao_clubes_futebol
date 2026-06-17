@@ -4,12 +4,11 @@ from flask_migrate import Migrate
 
 app = Flask(__name__)
 
+app.config['SECRET_KEY'] = 'fieledeus'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
-migrate = Migrate(app,db)
+migrate = Migrate(app, db)
 
-from app.routes import homepage, jogadores,financeiro,contratacoes,competicoes
-from app.models import competicoes
-from app.models import Jogador
+from app import routes, models
