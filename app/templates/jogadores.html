@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body class="d-flex">
-     <input type="checkbox" id="menu-toggle">
+    <input type="checkbox" id="menu-toggle">
     <header class="navbar-topo">
         <div class="header-container">
             <div class="header-esquerdo">
@@ -28,8 +28,8 @@
         </ul>
     </nav>
 
-    <div class="container py-5">
-        <div class="card mb-4">
+    <div class="container mt-5 pt-4">
+        <div class="card shadow-sm mb-4">
             <div class="card-body">
                 <h2>Gestão de Jogadores</h2>
                 <div class="d-flex gap-2">
@@ -39,7 +39,7 @@
             </div>
         </div>
 
-        <div id="form-cadastro" class="card" style="display:none;">
+        <div id="form-cadastro" class="card shadow-sm" style="display:none;">
             <div class="card-body">
                 <h3>Cadastrar Jogador</h3>
                 <form method="POST">

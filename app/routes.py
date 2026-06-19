@@ -37,6 +37,21 @@ def ver_historico():
         jogadores = Jogador.query.all()
     return render_template("historico.html", jogadores=jogadores)
 
+@app.route("/editar/<int:id>", methods=["GET", "POST"])
+def editar_jogador(id):
+    jogador = Jogador.query.get_or_404(id)
+    form = JogadorForm(obj=jogador) 
+    
+    if form.validate_on_submit():
+        jogador.nome = form.nome_atleta.data
+        jogador.posicao = form.posicao_atleta.data
+        jogador.situacao = form.situacao_atleta.data
+        jogador.historico = form.historico_atleta.data
+        db.session.commit()
+        return redirect(url_for('ver_historico')) 
+        
+    return render_template("editar.html", form=form, jogador=jogador)
+
 @app.route("/financeiro")
 def financeiro(): 
     return render_template("financeiro.html")
