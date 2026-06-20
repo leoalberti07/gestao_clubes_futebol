@@ -21,7 +21,7 @@
             <table class="table table-hover align-middle">
                 <thead class="table-light">
                     <tr>
-                        <th>Nome</th><th>Posição</th><th>Situação</th><th>Histórico</th><th>Ações</th>
+                        <th>Nome</th><th>Posição</th><th>Situação</th><th>Histórico</th><th>Salário</th><th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,6 +31,7 @@
                         <td>{{ j.posicao }}</td>
                         <td>{{ j.situacao }}</td>
                         <td>{{ j.historico }}</td>
+                        <td>{{ j.salario }}</td>
                         <td>
                             <a href="{{ url_for('editar_jogador', id=j.id) }}" class="btn btn-sm btn-warning">Editar</a>
                         </td>

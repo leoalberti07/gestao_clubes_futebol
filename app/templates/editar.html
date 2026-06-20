@@ -48,6 +48,11 @@
                         {{ form.historico_atleta(class="form-control", rows="4") }}
                     </div>
 
+                    <div class="mb-3">
+                        <label class="form-label">Salário</label>
+                        {{ form.salario(class="form-control", rows="4") }}
+                    </div>
+
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                         <a href="{{ url_for('ver_historico') }}" class="btn btn-secondary">Cancelar</a>
