@@ -31,7 +31,7 @@
                         <td>{{ j.posicao }}</td>
                         <td>{{ j.situacao }}</td>
                         <td>{{ j.historico }}</td>
-                        <td>{{ j.salario }}</td>
+                        <td>R$ {{ "%.2f"|format(j.salario) }}</td>
                         <td>
                             <a href="{{ url_for('editar_jogador', id=j.id) }}" class="btn btn-sm btn-warning">Editar</a>
                         </td>

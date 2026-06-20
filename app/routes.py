@@ -1,6 +1,7 @@
 from app import app
 
-from flask import render_template, url_for, redirect,request
+from datetime import datetime
+from flask import render_template, url_for, redirect, request, flash
 
 from app.form import *
 
@@ -19,6 +20,32 @@ def jogadores():
     
     return render_template("jogadores.html", form=form, jogadores=lista)
 
+@app.route('/gerar_folha', methods=['GET', 'POST'])
+def gerar_folha():
+    total_salario = 0
+    jogadores = Jogador.query.all()
+    for j in jogadores:
+        total_salario += j.salario
+    if total_salario == 0:
+        flash("Nenhum salário cadastrado para os jogadores!", "warning")
+        return redirect(url_for('financeiro'))
+    nova_transacao = Transacao(
+        tipo='DESPESA',
+        valor_transacao=total_salario,
+        descricao='Pagamento da Folha Salarial - Elenco',
+        data_transacao=datetime.today()
+    )
+    try:
+        db.session.add(nova_transacao)
+        db.session.commit()
+        flash(f"Folha de pagamento de R$ {total_salario:.2f} gerada e registrada no financeiro!", "success")
+    except Exception as e:
+        db.session.rollback()
+        flash("Erro ao registrar a folha no financeiro.", "danger")
+        
+
+    return redirect(url_for('financeiro_lista'))
+    
 
 @app.route('/financeiro', methods=['GET', 'POST'])
 def financeiro():
