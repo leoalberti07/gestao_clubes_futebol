@@ -4,11 +4,9 @@ from datetime import datetime
 class Jogador(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False)
-    idade = db.Column(db.Integer, nullable=False)
     posicao = db.Column(db.String(50), nullable=False)
-    numero_camisa = db.Column(db.Integer, nullable=True)
-    status = db.Column(db.String(20), default="Ativo")
-    valor_mercado = db.Column(db.Float, nullable=False)
+    situacao = db.Column(db.String(50), nullable=False)
+    historico = db.Column(db.String(500)) 
     salario = db.Column(db.Float, nullable=False)
 
 class Transacao(db.Model):
@@ -26,4 +24,10 @@ class Competicoes(db.Model):
     num_jogos = db.Column(db.Integer, nullable = True)
     vitorias = db.Column(db.Integer)
     derrotas = db.Column(db.Integer)
+
+class Historico(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    descricao = db.Column(db.String(200), nullable=False)
+    data = db.Column(db.String(20), nullable=False)
+    jogador_id = db.Column(db.Integer, db.ForeignKey('jogador.id'), nullable=False)
 
