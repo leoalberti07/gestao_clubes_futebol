@@ -13,7 +13,7 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -40,57 +40,74 @@
             <li><a href="{{ url_for('contratacoes') }}">Contratações</a></li>
         </ul>
     </nav>
+    <div class="container mt-5 pt-4">
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h2>Gestão de Competições</h2>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-primary"
+                        onclick="document.getElementById('form-cadastro').style.display='block'">Cadastrar
+                        campeonato</button>
+                    <a href="{{url_for('competicoes_financeiro')}}" class="btn btn-secondary">Campeonatos
+                        cadastrados</a>
+                </div>
+            </div>
+        </div>
 
-
-
-
-
-    <div class='formulario'>
-        <form action="" method="post" class="row mt-4">
-            {{ form.csrf_token }}
-
+        <div class="error">
             {% for field, errors in form.errors.items() %}
             {% for error in errors %}
-            <p>{{ error }}</p>
+            <p>{{ error }} <br></p>
             {% endfor %}
             {% endfor %}
-            <br><br>
-            {{form.competicao.label()}}
-            {{form.competicao()}}
-            <br><br>
-            {{form.colocacao.label()}}
-            {{form.colocacao()}}
+        </div>
 
-            <br><br>
-            {{form.premiacao.label()}}
-            {{form.premiacao()}}
-            <br><br>
+        <div id="form-cadastro" class="card shadow-sm" style="display:none;">
 
-            {{form.num_jogos.label()}}
-            {{form.num_jogos()}}
-            <br>
-            {{form.vitorias.label()}}
-            {{form.vitorias()}}
-            <br>
+            <div class='card-body'>
+                <form action="" method="post" class="row mt-4 ">
+                    {{ form.csrf_token }}
+                    <h3>
+                        Cadastro de campeonato
+                    </h3>
+                    <br><br>
+                    <div class="mt-3">
+                        {{form.competicao(class="form-control", placeholder="Competições")}}
+                    </div>
+                    <br><br>
+                    <div class="mt-3">
+                        {{form.colocacao(class="form-control",placeholder="Colocação")}}
+                    </div>
+                    <br><br>
+                    <div class="mt-3">
+                        {{form.premiacao(class="form-control",placeholder="Premiação")}}
+                    </div>
+                    <br><br>
+                    <div class="mt-3">
+                        {{form.num_jogos(class="form-control",placeholder="Numero de jogos no campeonato")}}
+                    </div>
+                    <br>
+                    <div class="mt-3">
+                        {{form.vitorias(class="form-control",placeholder="Vitorias")}}
+                    </div>
+                    <br>
+                    <div class="mt-3">
+                        {{form.derrotas(class="form-control",placeholder="Derrotas")}}
+                    </div>
 
-            {{form.derrotas.label()}}
+                    <br><br>
+                    <div class="mt-3">
+                        {{form.btnSubmit(class="btn btn-success")}}
+                    </div>
 
-            {{form.derrotas()}}
-            <br><br>
-
-            {{form.btnSubmit()}}
-
-        </form>
-    </div>
-    <div class="Resultados_comp">
-        <h3>Resultados: </h3>
-        <a href="{{url_for('competicoes_financeiro')}}"> kkkkkk</a>
-    </div>
+                </form>
+            </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+                crossorigin="anonymous"></script>
 
 </body>
 

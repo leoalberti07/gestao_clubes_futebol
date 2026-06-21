@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import  StringField, FloatField, SubmitField, IntegerField, SelectField
+from wtforms import  StringField, FloatField, SubmitField, IntegerField, SelectField, TextAreaField
 from wtforms.validators import DataRequired, NumberRange, ValidationError
 
 
@@ -77,20 +77,7 @@ class JogadorForm(FlaskForm):
     salario = FloatField('Salário', validators=[DataRequired(), NumberRange(min=1621, max=100000000)])
     btn_submit = SubmitField('Enviar')
 
-    def save(self):
-
-        jogador = Jogador(
-            nome = self.nome.data,
-            idade = self.idade.data,
-            posicao = self.posicao.data,
-            numero_camisa = self.numero_camisa.data,
-            status = self.status.data,
-            valor_mercado = self.valor_mercado.data,
-            salario = self.salario.data
-        )
-
-        db.session.add(jogador)
-        db.session.commit()
+    
 
 class TransacaoForm(FlaskForm):
     tipo = SelectField('Tipo de transação', validators=[DataRequired()], choices=[
@@ -130,4 +117,25 @@ class TransacaoForm(FlaskForm):
         )
 
         db.session.add(transacao)
+        db.session.commit()
+
+class JogadorForm(FlaskForm):
+    nome_atleta = StringField('Nome', validators=[DataRequired()])
+    posicao_atleta = SelectField('Posição', choices=[('GOL','GOL'),('ZAG','ZAG'),('LAT','LAT'),('MC','MC'),('MEI','MEI'),('PE','PE'),('PD','PD'),('ATA','ATA')])
+    situacao_atleta = SelectField('Situação', choices=[('ATIVO','ATIVO'),('EMPRESTADO','EMPRESTADO'),('LESIONADO','LESIONADO'),('INATIVO','INATIVO')])
+    historico_atleta = TextAreaField('Histórico inicial')
+    salario = FloatField('Salário', validators=[DataRequired(), NumberRange(min=1621, max=100000000)])
+    submit = SubmitField('Cadastrar')
+
+    def save(self):
+
+        jogador = Jogador(
+            nome = self.nome_atleta.data,
+            posicao = self.posicao_atleta.data,
+            situacao = self.situacao_atleta.data,
+            historico = self.historico_atleta.data,
+            salario = self.salario.data
+        )
+
+        db.session.add(jogador)
         db.session.commit()
