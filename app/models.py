@@ -32,3 +32,10 @@ class Historico(db.Model):
     data = db.Column(db.String(20), nullable=False)
     jogador_id = db.Column(db.Integer, db.ForeignKey('jogador.id'), nullable=False)
 
+class Transferencias(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(100),nullable=False )
+    posicao = db.Column(db.String(50), nullable=False)
+    clube = db.Column(db.String(100),nullable=False)
+    valor = db.Column(db.Float, nullable=False)
+    salario = db.Column(db.Float,nullable=False)

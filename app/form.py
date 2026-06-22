@@ -139,3 +139,38 @@ class JogadorForm(FlaskForm):
 
         db.session.add(jogador)
         db.session.commit()
+
+
+
+class TransferenciasForm(FlaskForm):
+    nome_atleta = StringField('Nome', validators=[DataRequired()])
+    posicao_atleta = SelectField('Posição', choices=[('GOL','GOL'),('ZAG','ZAG'),('LAT','LAT'),('MC','MC'),('MEI','MEI'),('PE','PE'),('PD','PD'),('ATA','ATA')])
+    clube = StringField('Clube anterior', validators=[DataRequired()])
+    valor = FloatField("Valor de Transferencia",validators=[DataRequired()])
+    salario = FloatField("Salário",validators=[DataRequired(),NumberRange(min=1621, max=100000000)])   
+    
+    submit = SubmitField("Enviar") 
+
+
+    def save(self):
+        transferencia = Transferencias(
+            nome = self.nome_atleta.data,
+            posicao = self.posicao_atleta.data,
+            clube =self.clube.data,
+            valor=self.valor.data,
+            salario = self.salario.data,
+     )
+
+        db.session.add(transferencia)
+        db.session.commit()    
+    def validate_nome_atleta(self, field):
+        caracteres = "@*?!'^+%&/()=}][{$#"
+        for car in self.nome_atleta.data:
+            if car in caracteres:
+                raise ValidationError(f"Erro,  não pode conter {car} ")
+    def validate_clube(self, field):
+        caracteres = "@*?!'^+%&/()=}][{$#"
+        for car in self.clube.data:
+            if car in caracteres:
+                raise ValidationError(f"Erro,  não pode conter {car} ")
+    
