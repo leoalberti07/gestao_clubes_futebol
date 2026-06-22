@@ -57,7 +57,7 @@
         <div class="error">
             {% for field, errors in form.errors.items() %}
             {% for error in errors %}
-            <p>{{ error }} <br></p>
+            <p class="text-danger">{{ error }} <br></p>
             {% endfor %}
             {% endfor %}
         </div>

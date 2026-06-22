@@ -15,7 +15,23 @@ def milhar(valor):
 
 @app.route('/', methods=['GET', 'POST'])
 def homepage():
-    return render_template('index.html')
+    total_jogadores = Jogador.query.count()
+    ultima_competicao = Competicoes.query.order_by(Competicoes.id.desc()).first()
+    transacoes = Transacao.query.all()
+    total_receita = 0
+    total_despesa = 0
+    
+    for transacao in transacoes:
+        if transacao.tipo.upper() == 'RECEITA':
+            total_receita += transacao.valor_transacao
+        else:
+            total_despesa += transacao.valor_transacao
+            
+    saldo_atual = total_receita - total_despesa
+    context = {
+        'saldo_atual': saldo_atual
+    }
+    return render_template('index.html',total_jogadores=total_jogadores, context=context, ultima_competicao=ultima_competicao)
 
 @app.route('/jogadores', methods=['GET', 'POST'])
 def jogadores():

@@ -160,7 +160,23 @@ class TransferenciasForm(FlaskForm):
             valor=self.valor.data,
             salario = self.salario.data,
      )
+        transacao = Transacao(
+            tipo = 'DESPESA',
+            valor_transacao = self.valor.data,
+            descricao = f'COMPRA ATLETA: {self.nome_atleta.data}',
+            
+        )
 
+        jogador = Jogador(
+            nome = self.nome_atleta.data,
+            posicao = self.posicao_atleta.data,
+            situacao = 'jogador transferido',
+            historico = f"clube anterior: {self.clube.data}",
+            salario = self.salario.data
+        )
+
+        db.session.add(jogador)
+        db.session.add(transacao)
         db.session.add(transferencia)
         db.session.commit()    
     def validate_nome_atleta(self, field):
