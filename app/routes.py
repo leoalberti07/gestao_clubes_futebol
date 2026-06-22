@@ -1,6 +1,6 @@
 from app import app
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import render_template, url_for, redirect, request, flash
 
 from app.form import *
@@ -45,24 +45,58 @@ def gerar_folha():
         
 
     return redirect(url_for('financeiro_lista'))
+
+@app.template_filter('dinheiro')
+def formatar_dinheiro(valor):
+    if valor is None:
+        return "R$ 0.00"
+    return f"R$ {valor:,.2f}".replace(',', '.')
     
 
 @app.route('/financeiro', methods=['GET', 'POST'])
 def financeiro():
-    transacoes = Transacao.query.all()
+    hoje = datetime.today()
+
+    data_inicio_str = request.args.get('data_inicio')
+    data_fim_str = request.args.get('data_fim')
+    
+    if data_inicio_str:
+        data_inicio = datetime.strptime(data_inicio_str, '%Y-%m-%d')
+    else:
+        data_inicio = hoje - timedelta(days=30)
+        
+    if data_fim_str:
+        data_fim = datetime.strptime(data_fim_str, '%Y-%m-%d').replace(hour=23, minute=59, second=59)
+    else:
+        data_fim = hoje.replace(hour=23, minute=59, second=59)
+
+    transacoes = Transacao.query.filter(
+        Transacao.data_transacao >= data_inicio,
+        Transacao.data_transacao <= data_fim
+    ).all()
+    
+    # Se você quiser ordenar pelas mais recentes:
+    # transacoes = Transacao.query.filter(...).order_by(Transacao.data_transacao.desc()).all()
+
     total_receita = 0
     total_despesa = 0
     for transacao in transacoes:
-        if transacao.tipo == 'RECEITA':
+        if transacao.tipo.upper() == 'RECEITA':
             total_receita += transacao.valor_transacao
         else:
             total_despesa += transacao.valor_transacao
+            
     saldo_atual = total_receita - total_despesa
-    context ={
+    
+    context = {
+        'transacoes': transacoes,
         'total_receita': total_receita,
         'total_despesa': total_despesa,
-        'saldo_atual': saldo_atual
+        'saldo_atual': saldo_atual,
+        'data_inicio': data_inicio.strftime('%Y-%m-%d'),
+        'data_fim': data_fim.strftime('%Y-%m-%d')
     }
+    
     return render_template('financeiro.html', context=context)
 
 @app.route('/financeiro_transacoes', methods=['GET', 'POST'])

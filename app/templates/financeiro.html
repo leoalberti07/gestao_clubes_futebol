@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body class="bg-light">
 
     <input type="checkbox" id="menu-toggle">
@@ -34,36 +36,57 @@
 
     <main class="conteudo-principal-app p-4">
         <div class="container">
-            
+
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
                     <h3 class="fw-bold text-dark m-0">Painel Financeiro</h3>
                     <p class="text-secondary m-0">Resumo do fluxo de caixa e balanço geral.</p>
                 </div>
                 <div class="gap-2 d-flex">
-                    <a href="{{ url_for('financeiro_transacoes') }}" class="btn btn-primary fw-semibold">Nova Transação</a>
-                    <a href="{{ url_for('financeiro_lista') }}" class="btn btn-outline-secondary fw-semibold">Ver Histórico</a>
+                    <a href="{{ url_for('financeiro_transacoes') }}" class="btn btn-primary fw-semibold">Nova
+                        Transação</a>
+                    <a href="{{ url_for('financeiro_lista') }}" class="btn btn-outline-secondary fw-semibold">Ver
+                        Histórico</a>
                 </div>
             </div>
+
+            <form method="GET" action="{{ url_for('financeiro') }}" class="row g-3 mb-4 align-items-end">
+                <div class="col-md-4">
+                    <label for="data_inicio" class="form-label">Data Início</label>
+                    <input type="date" class="form-control" id="data_inicio" name="data_inicio"
+                        value="{{ context.data_inicio }}">
+                </div>
+                <div class="col-md-4">
+                    <label for="data_fim" class="form-label">Data Fim</label>
+                    <input type="date" class="form-control" id="data_fim" name="data_fim"
+                        value="{{ context.data_fim }}">
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-filter"></i> Filtrar Período
+                    </button>
+                </div>
+            </form>
 
             <div class="row g-3 mb-4">
                 <div class="col-md-4">
                     <div class="card border-0 shadow-sm bg-white p-3">
                         <span class="text-uppercase font-monospace text-muted small fw-bold">Total Receitas</span>
-                        <h3 class="text-success fw-bold mt-1">R$ {{ "%.2f"|format(context['total_receita']) }}</h3>
+                        <h3 class="text-success fw-bold mt-1">{{ (context['total_receita'])|dinheiro }}</h3>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card border-0 shadow-sm bg-white p-3">
                         <span class="text-uppercase font-monospace text-muted small fw-bold">Total Despesas</span>
-                        <h3 class="text-danger fw-bold mt-1">R$ {{ "%.2f"|format(context['total_despesa']) }}</h3>
+                        <h3 class="text-danger fw-bold mt-1">{{ (context['total_despesa'])|dinheiro }}</h3>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card border-0 shadow-sm bg-white p-3">
                         <span class="text-uppercase font-monospace text-muted small fw-bold">Saldo Atual</span>
-                        <h3 class="{% if context['saldo_atual'] >= 0 %}text-primary{% else %}text-danger{% endif %} fw-bold mt-1">
-                            R$ {{ "%.2f"|format(context['saldo_atual']) }}
+                        <h3
+                            class="{% if context['saldo_atual'] >= 0 %}text-primary{% else %}text-danger{% endif %} fw-bold mt-1">
+                            {{ (context['saldo_atual'])|dinheiro }}
                         </h3>
                     </div>
                 </div>
@@ -73,7 +96,7 @@
                 <div class="col-md-6 col-lg-5">
                     <div class="bg-white p-4 rounded border shadow-sm text-center">
                         <h5 class="fw-bold text-dark mb-4"> Divisão das Movimentações</h5>
-                        
+
                         <div style="position: relative; max-width: 280px; margin: 0 auto;">
                             <canvas id="graficoDonutFinanceiro"></canvas>
                         </div>
@@ -118,7 +141,7 @@
                     tooltip: {
                         enabled: temDados,
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 let value = context.raw;
                                 return ' R$ ' + value.toFixed(2).replace('.', ',');
                             }
@@ -132,4 +155,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
