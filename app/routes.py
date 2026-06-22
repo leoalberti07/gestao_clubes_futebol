@@ -5,6 +5,14 @@ from flask import render_template, url_for, redirect, request, flash
 
 from app.form import *
 
+@app.template_filter('milhar')
+def milhar(valor):
+    try:
+        valor = float(valor)
+        return f"{valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+    except (ValueError, TypeError):
+        return "0,00"
+
 @app.route('/', methods=['GET', 'POST'])
 def homepage():
     return render_template('index.html')
@@ -63,7 +71,7 @@ def financeiro():
         'total_despesa': total_despesa,
         'saldo_atual': saldo_atual
     }
-    return render_template('financeiro.html', context=context)
+    return render_template('financeiro.html', context=context, )
 
 @app.route('/financeiro_transacoes', methods=['GET', 'POST'])
 def financeiro_transacoes():
@@ -150,10 +158,7 @@ def competicoes_financeiro():
     }
     return render_template('competicoes_fin.html', context=context)
 
-@app.route('/contratacoes',methods=['GET', 'POST'])
 
-def contratacoes():
-    return render_template('contratacoes.html')
 
 @app.route("/historico", methods=["GET"])
 def ver_historico():
@@ -179,3 +184,27 @@ def editar_jogador(id):
         return redirect(url_for('ver_historico')) 
         
     return render_template("editar.html", form=form, jogador=jogador)
+
+
+@app.route('/contratacoes',methods=['GET', 'POST'])
+def contratacoes():
+    form = TransferenciasForm() 
+
+    context={}
+    if form.validate_on_submit():
+        form.save()
+       
+    return render_template('contratacoes.html', context=context , form=form)
+
+@app.route('/contratacoes/historicos', methods=['GET', 'POST'])
+def cont_historico():
+    termo_pesquisa = request.args.get('pesquisa', '').strip()
+    if termo_pesquisa:
+        resultado = Transferencias.query.filter(Transferencias.nome.like(f"%{termo_pesquisa}%")).all()
+    else:
+        resultado = Transferencias.query.order_by(Transferencias.nome).all()
+    context = {
+        'dados': resultado
+    }
+
+    return render_template('transferencia.html', context=context)

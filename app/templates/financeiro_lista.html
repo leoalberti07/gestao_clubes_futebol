@@ -76,7 +76,7 @@
                             <td
                                 class="fw-bold {% if linha.tipo == 'RECEITA' %}text-success{% else %}text-danger{% endif %}">
                                 {% if linha.tipo == 'RECEITA' %}+{% else %}-{% endif %} R$ {{
-                                "%.2f"|format(linha.valor_transacao) }}
+                                linha.valor_transacao|milhar }}
                             </td>
                             <td class="text-center">
                                 <form action="{{ url_for('excluir_transacao', id=linha.id) }}" method="POST"
@@ -98,7 +98,7 @@
             </div>
 
             <div class="mt-4 d-flex gap-2">
-                <a href="{{ url_for('financeiro') }}" class="btn btn-outline-secondary fw-semibold">Voltar</a>
+                <a href="{{ url_for('financeiro') }}" class="btn btn-outline-secondary fw-semibold">← Voltar</a>
                 <form action="{{ url_for('gerar_folha') }}" method="POST" class="d-inline">
                     <button type="submit" class="btn btn-danger">
                         <i class="fas fa-money-check-alt"></i> Gerar Folha de Pagamento
