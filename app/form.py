@@ -12,7 +12,8 @@ class CompeticoesForm(FlaskForm):
     colocacao = IntegerField("Colocação: ", validators=[DataRequired(), NumberRange(min=0, max=46)])
     premiacao = FloatField("Premiação: ", validators=[DataRequired(),NumberRange(min=0, max=1000000000000)])
     num_jogos = IntegerField("Número de jogos do campeonato: ", validators=[DataRequired()])
-    vitorias = IntegerField("Numero de vitorias: ", validators=[DataRequired()])
+    vitorias =  IntegerField("Numero de vitorias: ", validators=[DataRequired()])
+    empates =  IntegerField("Numero de empatesS: ", validators=[DataRequired()])
     derrotas = IntegerField("Numero de derrotas: ", validators=[DataRequired()])
     
     
@@ -26,6 +27,7 @@ class CompeticoesForm(FlaskForm):
             num_jogos = self.num_jogos.data,
             vitorias = self.vitorias.data,
             derrotas = self.derrotas.data,
+            empates = self.empates.data
         )
 
         financias_competição = Transacao(
@@ -46,37 +48,14 @@ class CompeticoesForm(FlaskForm):
         caracteres = "@*?!'^+%&/()=}][{$#"
         for car in self.competicao.data:
             if car in caracteres:
-                raise ValidationError(f"Erro,  não pode conter {car} ")
+                raise ValidationError(f"Erro,  não pode conter caracter especiais ")
     
     
     def validate_num_jogos(self, field):
-        if field.data < self.vitorias.data + self.derrotas.data:
+        if field.data < self.vitorias.data + self.derrotas.data + self.empates:
             raise ValidationError(
-                "O número de jogos não pode ser menor que vitórias + derrotas."
+                "O número de jogos não pode ser menor que do que a soma de vitorias, empates e derrotas."
             )
-
-class JogadorForm(FlaskForm):
-
-    nome = StringField('Nome', validators=[DataRequired()])
-    idade = IntegerField('Idade', validators=[DataRequired(), NumberRange(min=0, max=70)])
-    posicao = SelectField('posição', validators=[DataRequired()], choices=[
-        ('GOL', 'Goleiro'),
-        ('ZAG', 'Zagueiro'),
-        ('LAT', 'Lateral'),
-        ('MEI', 'Meio-Campo'),
-        ('ATA', 'Atacante')
-    ])
-    numero_camisa = IntegerField('Numero da camisa', validators=[DataRequired(), NumberRange(min=1, max=99)])
-    status = SelectField('Status', validators=[DataRequired()], choices=[
-        ('ATIVO', 'Ativo / No Elenco'),
-        ('LESIONADO', 'Lesionado'),
-        ('EMPRESTADO', 'Emprestado'),
-        ('RESERVA', 'Reserva')
-    ])
-    valor_mercado = FloatField('Valor de mercado', validators=[DataRequired(), NumberRange(min=0, max=100000000000)])
-    salario = FloatField('Salário', validators=[DataRequired(), NumberRange(min=1621, max=100000000)])
-    btn_submit = SubmitField('Enviar')
-
     
 
 class TransacaoForm(FlaskForm):
@@ -163,6 +142,8 @@ class TransferenciasForm(FlaskForm):
 
         db.session.add(transferencia)
         db.session.commit()    
+
+
     def validate_nome_atleta(self, field):
         caracteres = "@*?!'^+%&/()=}][{$#"
         for car in self.nome_atleta.data:

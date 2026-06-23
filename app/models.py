@@ -3,10 +3,10 @@ from datetime import datetime
 
 class Jogador(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(100), nullable=False)
-    posicao = db.Column(db.String(50), nullable=False)
-    situacao = db.Column(db.String(50), nullable=False)
-    historico = db.Column(db.String(500)) 
+    nome_atleta = db.Column(db.String(100), nullable=False)
+    posicao_atleta = db.Column(db.String(50), nullable=False)
+    situacao_atleta = db.Column(db.String(50), nullable=False)
+    historico_atleta = db.Column(db.String(500)) 
     salario = db.Column(db.Float, nullable=False)
 
 class Transacao(db.Model):
@@ -23,6 +23,7 @@ class Competicoes(db.Model):
     premiacao = db.Column(db.Integer, nullable = True)
     num_jogos = db.Column(db.Integer, nullable = True)
     vitorias = db.Column(db.Integer)
+    empates = db.Column(db.Integer)
     derrotas = db.Column(db.Integer)
 
 
