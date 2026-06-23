@@ -22,8 +22,8 @@ class Competicoes(db.Model):
     colocacao = db.Column(db.Integer, nullable = True)
     premiacao = db.Column(db.Integer, nullable = True)
     num_jogos = db.Column(db.Integer, nullable = True)
-    vitorias = db.Column(db.Integer)
-    empates = db.Column(db.Integer)
+    vitorias = db.Column(db.Integer,nullable = True)
+    empates = db.Column(db.Integer,nullable = True)
     derrotas = db.Column(db.Integer)
 
 
@@ -35,8 +35,8 @@ class Historico(db.Model):
 
 class Transferencias(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(100),nullable=False )
-    posicao = db.Column(db.String(50), nullable=False)
+    nome_atleta = db.Column(db.String(100),nullable=False )
+    posicao_atleta = db.Column(db.String(50), nullable=False)
     clube = db.Column(db.String(100),nullable=False)
     valor = db.Column(db.Float, nullable=False)
     salario = db.Column(db.Float,nullable=False)

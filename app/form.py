@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import  StringField, FloatField, SubmitField, IntegerField, SelectField, TextAreaField
-from wtforms.validators import DataRequired, NumberRange, ValidationError
+from wtforms.validators import DataRequired, NumberRange, ValidationError,InputRequired
 
 
 from app.models import *
@@ -9,12 +9,12 @@ from app import db
 
 class CompeticoesForm(FlaskForm):
     competicao = StringField("Competições: ", validators=[DataRequired()])
-    colocacao = IntegerField("Colocação: ", validators=[DataRequired(), NumberRange(min=0, max=46)])
+    colocacao = IntegerField("Colocação: ", validators=[DataRequired(), NumberRange(min=0, max=1000)])
     premiacao = FloatField("Premiação: ", validators=[DataRequired(),NumberRange(min=0, max=1000000000000)])
-    num_jogos = IntegerField("Número de jogos do campeonato: ", validators=[DataRequired()])
-    vitorias =  IntegerField("Numero de vitorias: ", validators=[DataRequired()])
-    empates =  IntegerField("Numero de empatesS: ", validators=[DataRequired()])
-    derrotas = IntegerField("Numero de derrotas: ", validators=[DataRequired()])
+    num_jogos = IntegerField("Número de jogos do campeonato: ", validators=[DataRequired(),NumberRange(min=0, max=1000)])
+    vitorias =  IntegerField("Numero de vitorias: ", validators=[InputRequired(),NumberRange(min=0, max=1000)])
+    empates =  IntegerField("Numero de empatesS: ", validators=[InputRequired(),NumberRange(min=0, max=1000)])
+    derrotas = IntegerField("Numero de derrotas: ", validators=[InputRequired(),NumberRange(min=0, max=1000)])
     
     
     btnSubmit = SubmitField("Enviar")
@@ -52,7 +52,7 @@ class CompeticoesForm(FlaskForm):
     
     
     def validate_num_jogos(self, field):
-        if field.data < self.vitorias.data + self.derrotas.data + self.empates:
+        if field.data < self.vitorias.data + self.derrotas.data + self.empates.data:
             raise ValidationError(
                 "O número de jogos não pode ser menor que do que a soma de vitorias, empates e derrotas."
             )
@@ -109,10 +109,10 @@ class JogadorForm(FlaskForm):
     def save(self):
 
         jogador = Jogador(
-            nome = self.nome_atleta.data,
-            posicao = self.posicao_atleta.data,
-            situacao = self.situacao_atleta.data,
-            historico = self.historico_atleta.data,
+            nome_atleta = self.nome_atleta.data,
+            posicao_atleta = self.posicao_atleta.data,
+            situacao_atleta = self.situacao_atleta.data,
+            historico_atleta = self.historico_atleta.data,
             salario = self.salario.data
         )
 
@@ -133,13 +133,29 @@ class TransferenciasForm(FlaskForm):
 
     def save(self):
         transferencia = Transferencias(
-            nome = self.nome_atleta.data,
-            posicao = self.posicao_atleta.data,
+            nome_atleta = self.nome_atleta.data,
+            posicao_atleta = self.posicao_atleta.data,
             clube =self.clube.data,
             valor=self.valor.data,
             salario = self.salario.data,
      )
+        transacao = Transacao(
+            tipo = 'DESPESA',
+            valor_transacao = self.valor.data,
+            descricao = f'COMPRA ATLETA: {self.nome_atleta.data}',
+            
+        )
 
+        jogador = Jogador(
+            nome_atleta = self.nome_atleta.data,
+            posicao_atleta = self.posicao_atleta.data,
+            situacao_atleta = 'jogador transferido',
+            historico_atleta = f"clube anterior: {self.clube.data}",
+            salario = self.salario.data
+        )
+
+        db.session.add(jogador)
+        db.session.add(transacao)
         db.session.add(transferencia)
         db.session.commit()    
 

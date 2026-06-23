@@ -63,11 +63,11 @@
                     <tbody>
                         {% for j in jogadores %}
                         <tr>
-                            <td>{{ j.nome }}</td>
-                            <td>{{ j.posicao }}</td>
-                            <td>{{ j.situacao }}</td>
-                            <td>{{ j.historico }}</td>
-                            <td>R$ {{ j.salario|milhar}}</td>
+                            <td>{{ j.nome_atleta }}</td>
+                            <td>{{ j.posicao_atleta}}</td>
+                            <td>{{ j.situacao_atleta}}</td>
+                            <td>{{ j.historico_atleta}}</td>
+                            <td>{{ j.salario|milhar}}</td>
                             <td>
                                 <a href="{{ url_for('editar_jogador', id=j.id) }}"
                                     class="btn btn-sm btn-warning">Editar</a>

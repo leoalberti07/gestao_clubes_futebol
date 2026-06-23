@@ -55,11 +55,11 @@
                     <div class="mb-3">{{ form.valor(class="form-control", placeholder="Valor de mercado") }}</div>
                     <div class="mb-3">{{ form.salario(class="form-control", placeholder="Salário")}}</div>
                     {{ form.submit(class="btn btn-success") }}
-                    {{%if form.submit == True%}}
+                    {%if form.submit == True%}
                     <div class="alert alert-success" role="alert">
                         Jogador cadastrado com sucesso!
                     </div>
-                    {{%endif%}}
+                    {%endif%}
                 </form>
             </div>
         </div>

@@ -75,8 +75,8 @@
                             </td>
                             <td
                                 class="fw-bold {% if linha.tipo == 'RECEITA' %}text-success{% else %}text-danger{% endif %}">
-                                {% if linha.tipo == 'RECEITA' %}+{% else %}-{% endif %} R$ {{
-                                linha.valor_transacao|milhar }}
+                                {% if linha.tipo == 'RECEITA' %}+{% else %}-{% endif %} {{
+                                linha.valor_transacao| milhar }}
                             </td>
                             <td class="text-center">
                                 <form action="{{ url_for('excluir_transacao', id=linha.id) }}" method="POST"

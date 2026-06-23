@@ -1,6 +1,6 @@
 from app import app
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import render_template, url_for, redirect, request, flash
 
 from app.form import *
@@ -9,22 +9,29 @@ from app.form import *
 def milhar(valor):
     try:
         valor = float(valor)
-        return f"{valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+        return f" R$ {valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
     except (ValueError, TypeError):
         return "0,00"
 
 @app.route('/', methods=['GET', 'POST'])
 def homepage():
     total_jogadores = Jogador.query.count()
+
     ultima_competicao = Competicoes.query.order_by(Competicoes.id.desc()).first() or "nenhuma"
     transacoes = Transacao.query.all()
     total_receita = 0
     total_despesa = 0
+
+    
+
     for transacao in transacoes:
         if transacao.tipo.upper() == 'RECEITA':
             total_receita += transacao.valor_transacao
         else:
             total_despesa += transacao.valor_transacao
+
+
+ 
 
     saldo_atual = total_receita - total_despesa
     context = {
@@ -68,25 +75,52 @@ def gerar_folha():
         
 
     return redirect(url_for('financeiro_lista'))
+
+
     
 
 @app.route('/financeiro', methods=['GET', 'POST'])
 def financeiro():
-    transacoes = Transacao.query.all()
+    hoje = datetime.today()
+
+    data_inicio_str = request.args.get('data_inicio')
+    data_fim_str = request.args.get('data_fim')
+    
+    if data_inicio_str:
+        data_inicio = datetime.strptime(data_inicio_str, '%Y-%m-%d')
+    else:
+        data_inicio = hoje - timedelta(days=30)
+        
+    if data_fim_str:
+        data_fim = datetime.strptime(data_fim_str, '%Y-%m-%d').replace(hour=23, minute=59, second=59)
+    else:
+        data_fim = hoje.replace(hour=23, minute=59, second=59)
+
+    transacoes = Transacao.query.filter(
+        Transacao.data_transacao >= data_inicio,
+        Transacao.data_transacao <= data_fim
+    ).all()
+
     total_receita = 0
     total_despesa = 0
     for transacao in transacoes:
-        if transacao.tipo == 'RECEITA':
+        if transacao.tipo.upper() == 'RECEITA':
             total_receita += transacao.valor_transacao
         else:
             total_despesa += transacao.valor_transacao
+            
     saldo_atual = total_receita - total_despesa
-    context ={
+    
+    context = {
+        'transacoes': transacoes,
         'total_receita': total_receita,
         'total_despesa': total_despesa,
-        'saldo_atual': saldo_atual
+        'saldo_atual': saldo_atual,
+        'data_inicio': data_inicio.strftime('%Y-%m-%d'),
+        'data_fim': data_fim.strftime('%Y-%m-%d')
     }
-    return render_template('financeiro.html', context=context, )
+    
+    return render_template('financeiro.html', context=context)
 
 @app.route('/financeiro_transacoes', methods=['GET', 'POST'])
 def financeiro_transacoes():
@@ -190,10 +224,10 @@ def editar_jogador(id):
     form = JogadorForm(obj=jogador) 
     
     if form.validate_on_submit():
-        jogador.nome = form.nome_atleta.data
-        jogador.posicao = form.posicao_atleta.data
-        jogador.situacao = form.situacao_atleta.data
-        jogador.historico = form.historico_atleta.data
+        jogador.nome_atleta = form.nome_atleta.data
+        jogador.posicao_atleta = form.posicao_atleta.data
+        jogador.situacao_atleta = form.situacao_atleta.data
+        jogador.historico_atleta = form.historico_atleta.data
         jogador.salario = form.salario.data
         db.session.commit()
         return redirect(url_for('ver_historico')) 
@@ -215,9 +249,9 @@ def contratacoes():
 def cont_historico():
     termo_pesquisa = request.args.get('pesquisa', '').strip()
     if termo_pesquisa:
-        resultado = Transferencias.query.filter(Transferencias.nome.like(f"%{termo_pesquisa}%")).all()
+        resultado = Transferencias.query.filter(Transferencias.nome_atleta.like(f"%{termo_pesquisa}%")).all()
     else:
-        resultado = Transferencias.query.order_by(Transferencias.nome).all()
+        resultado = Transferencias.query.order_by(Transferencias.nome_atleta).all()
     context = {
         'dados': resultado
     }

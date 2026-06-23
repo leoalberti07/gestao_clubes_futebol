@@ -56,7 +56,7 @@
                         <tr>
                             <th>Nome</th>
                             <th>Posição</th>
-                            <th>Clube</th>
+                            <th>Ex-clube</th>
                             <th>Valor</th>
                             <th>Salário</th>
                         </tr>
@@ -64,11 +64,11 @@
                     <tbody>
                         {% for linha in context['dados'] %}
                         <tr class="fw-semibold text-dark">
-                            <td>{{linha.nome}}</td>
-                            <td>{{linha.posicao}}</td>
+                            <td>{{linha.nome_atleta}}</td>
+                            <td>{{linha.posicao_atleta}}</td>
                             <td>{{linha.clube}}</td>
-                            <td>R$ {{linha.valor|milhar}}</td>
-                            <td>R$ {{linha.salario|milhar}}</td>
+                            <td>{{linha.valor|milhar}}</td>
+                            <td>{{linha.salario|milhar}}</td>
                         </tr>
                         {% endfor %}
                     </tbody>

@@ -50,17 +50,35 @@
                 </div>
             </div>
 
+            <form method="GET" action="{{ url_for('financeiro') }}" class="row g-3 mb-4 align-items-end">
+                <div class="col-md-4">
+                    <label for="data_inicio" class="form-label">Data Início</label>
+                    <input type="date" class="form-control" id="data_inicio" name="data_inicio"
+                        value="{{ context.data_inicio }}">
+                </div>
+                <div class="col-md-4">
+                    <label for="data_fim" class="form-label">Data Fim</label>
+                    <input type="date" class="form-control" id="data_fim" name="data_fim"
+                        value="{{ context.data_fim }}">
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-filter"></i> Filtrar Período
+                    </button>
+                </div>
+            </form>
+
             <div class="row g-3 mb-4">
                 <div class="col-md-4">
                     <div class="card border-0 shadow-sm bg-white p-3">
                         <span class="text-uppercase font-monospace text-muted small fw-bold">Total Receitas</span>
-                        <h3 class="text-success fw-bold mt-1">R$ {{ context['total_receita']|milhar }} </h3>
+                        <h3 class="text-success fw-bold mt-1">{{ (context['total_receita'])| milhar }}</h3>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card border-0 shadow-sm bg-white p-3">
                         <span class="text-uppercase font-monospace text-muted small fw-bold">Total Despesas</span>
-                        <h3 class="text-danger fw-bold mt-1">R$ {{ context['total_despesa']|milhar }}</h3>
+                        <h3 class="text-danger fw-bold mt-1">{{ (context['total_despesa'])| milhar }}</h3>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -68,7 +86,7 @@
                         <span class="text-uppercase font-monospace text-muted small fw-bold">Saldo Atual</span>
                         <h3
                             class="{% if context['saldo_atual'] >= 0 %}text-primary{% else %}text-danger{% endif %} fw-bold mt-1">
-                            R$ {{ context['saldo_atual']|milhar }}
+                            {{ (context['saldo_atual'])|milhar }}
                         </h3>
                     </div>
                 </div>
