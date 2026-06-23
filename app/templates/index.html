@@ -16,36 +16,36 @@
 
     <input type="checkbox" id="menu-toggle">
 
-<header class="navbar-topo">
-    <div class="header-container">
-        <div class="header-esquerdo">
-            <label for="menu-toggle" class="btn-menu-header">☰</label>
-            <span class="logo-texto">Gerir<span class="text-primary">Fut</span></span>
+    <header class="navbar-topo">
+        <div class="header-container">
+            <div class="header-esquerdo">
+                <label for="menu-toggle" class="btn-menu-header">☰</label>
+                <span class="logo-texto">Gerir<span class="text-primary">Fut</span></span>
+            </div>
+
+            <div class="header-direito"></div>
         </div>
-        
-        <div class="header-direito"></div>
-    </div>
-</header>
+    </header>
 
-<nav class="sidebar">
-    <ul>
-        <li><a href="{{ url_for('homepage') }}">Home</a></li>
-        <li><a href="{{ url_for('jogadores') }}">Jogadores</a></li>
-        <li><a href="{{ url_for('financeiro') }}">Financeiro</a></li>
-        <li><a href="{{ url_for('competicoes') }}">Competições</a></li>
-        <li><a href="{{ url_for('contratacoes') }}">Contratações</a></li>
-    </ul>
-</nav>
+    <nav class="sidebar">
+        <ul>
+            <li><a href="{{ url_for('homepage') }}">Home</a></li>
+            <li><a href="{{ url_for('jogadores') }}">Jogadores</a></li>
+            <li><a href="{{ url_for('financeiro') }}">Financeiro</a></li>
+            <li><a href="{{ url_for('competicoes') }}">Competições</a></li>
+            <li><a href="{{ url_for('contratacoes') }}">Contratações</a></li>
+        </ul>
+    </nav>
 
-<div class="main-content container mt-5 pt-4">
-        
+    <div class="main-content container mt-5 pt-4">
+
         <div class="banner mb-4 p-4 bg-dark rounded shadow-sm">
             <h3 class="fw-bold text-white m-0">Bem vindo ao GerirFut!</h3>
             <p class="text-white-50 m-0">Resumo geral do seu clube de futebol</p>
         </div>
 
         <div class="row g-4">
-            
+
             <div class="col-md-6">
                 <div class="card h-100 border-0 shadow-sm">
                     <div class="card-body">
@@ -64,11 +64,12 @@
                     <div class="card-body">
                         <h6 class="card-subtitle mb-2 text-muted">Balanço do Mês</h6>
                         <h5 class="card-title fw-bold">Financeiro</h5>
-                        <p class="card-text fs-4 fw-semibold {% if context and context.saldo_atual >= 0 %}text-success{% else %}text-danger{% endif %}">
+                        <p
+                            class="card-text fs-4 fw-semibold {% if context and context.saldo_atual >= 0 %}text-success{% else %}text-danger{% endif %}">
                             {% if context %}
-                                {{ context.saldo_atual|dinheiro }}
+                            {{ context.saldo_atual|milhar }}
                             {% else %}
-                                R$ 0,00
+                            R$ 0,00
                             {% endif %}
                         </p>
                         <a href="{{ url_for('financeiro') }}" class="btn btn-sm btn-outline-dark">Ir para Caixa</a>
@@ -83,9 +84,10 @@
                         <h5 class="card-title fw-bold">Competições</h5>
                         <p class="card-text fs-5 text-secondary">
                             última competição: {{ ultima_competicao.competicao }} <br>
-                            colocação: {{ ultima_competicao.colocacao }}° lugar  
+                            colocação: {{ ultima_competicao.colocacao }}° lugar
                         </p>
-                        <a href="{{ url_for('competicoes_financeiro') }}" class="btn btn-sm btn-outline-warning">Ver Tabela</a>
+                        <a href="{{ url_for('competicoes_financeiro') }}" class="btn btn-sm btn-outline-warning">Ver
+                            Tabela</a>
                     </div>
                 </div>
             </div>
